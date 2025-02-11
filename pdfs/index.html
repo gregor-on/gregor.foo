@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item List PDF Generator</title>
+    <link rel="stylesheet" href="pdf.css">
+</head>
+<body>
+    <h1>Item List PDF Generator</h1>
+
+    <div class="input-group">
+        <label for="company-name">Company:</label>
+        <input type="text" id="company-name" name="company-name">
+    </div>
+    <div class="input-group">
+        <label for="list-name">List Name:</label>
+        <input type="text" id="list-name" name="list-name">
+    </div>
+
+
+    <div class="item-input-container">
+        <label for="item-name">Item:</label>
+        <input type="text" id="item-name" name="item-name" class="item-name">
+        <label for="item-description">Description:</label>
+        <input type="text" id="item-description" name="item-description" class="item-description">
+        <label for="item-price">Price:</label>
+        <input type="number" id="item-price" name="item-price" step="0.01" min="0" class="item-price">
+        <button id="add-item">Add Item</button>
+        <button id="clear-inputs">Clear Inputs</button> <!-- Renamed for clarity -->
+    </div>
+
+
+    <h2>Item List</h2>
+    <div id="item-list">
+       <ul id="item-list-items">
+            <!-- Item items will be added here -->
+        </ul>
+    </div>
+
+    <button id="generate-pdf">Generate & Download PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
