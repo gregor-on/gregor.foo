@@ -89,9 +89,10 @@ generatePdfButton.addEventListener('click', () => {
         doc.setFont('helvetica', 'bold');
         doc.text(item.name, margin, yPos, { maxWidth: itemWidth });
         doc.setFont('helvetica', 'normal');
-        doc.text(`$${item.price.toFixed(2)}`, margin + itemWidth, yPos, { maxWidth: priceWidth });
         const descriptionLines = doc.splitTextToSize(item.description, descriptionWidth);
         doc.text(descriptionLines, margin + itemWidth + priceWidth, yPos);
+        doc.text(`$${item.price.toFixed(2)}`, margin + itemWidth, yPos, { maxWidth: priceWidth });
+
 
         // Calculate the height of the *highest* element (likely the description)
         const itemHeight = Math.max(lineHeight, descriptionLines.length * lineHeight);
