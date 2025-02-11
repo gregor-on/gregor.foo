@@ -1,12 +1,9 @@
 /* pdf.css */
-
-* {
-    margin: 0;
-}
 body {
     font-family: sans-serif;
-        padding: 20px
-/*     margin: 20px; */
+    margin: 20px;
+    padding: 2em;
+    background:  url("img-noise-48x48.png") repeat;
 }
 
 .input-group {
@@ -14,77 +11,79 @@ body {
 }
 
 label {
-    /*  display: block;  <- REMOVE THIS */
-    /*  margin-bottom: 5px; <- REMOVE THIS*/
-    margin-right: 5px; /* Add some space between label and input */
-    display: inline-block; /* Make labels inline */
-    width: auto;          /* Let labels take their natural width */
-    vertical-align: middle; /* Align labels vertically with inputs*/
-    font-size: .8em;
+    margin-right: 5px;
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+    font-size: .7em;
 }
 
 input[type="text"],
 input[type="number"] {
-    /*  width: 100%;   <- Remove this */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    margin-right: 10px; /* Add some space between inputs */
-    vertical-align: middle; /* Align with labels*/
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
 /* Item input container for inline layout */
 .item-input-container {
-    display: flex;      /* Use flexbox! */
-    flex-wrap: nowrap;  /* Prevent wrapping to new lines */
-    align-items: center; /* Vertical alignment */
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
     margin-bottom: 10px;
-    width: 100%;        /* Take full width */
+    width: 100%;
+    padding: 3.5em 0 ;
 }
 
 .item-name {
-    width: 12%;
-    flex-grow: 0;      /* Don't grow */
-    flex-shrink: 0;    /* Don't shrink */
+    width: 10%;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 .item-description {
-    width: 50%;
+    width: 55%;
     flex-grow: 0;
     flex-shrink: 0;
 }
 
 .item-price {
-    width: 8%;
+    width: 10%;
     flex-grow: 0;
     flex-shrink: 0;
 }
-/*No need this any more*/
-/* .item-input-container input {
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin-right: 5px;
-} */
 
 button {
-    background-color: #4CAF50;
+    background-color: #3c4ef1;
     color: white;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    vertical-align: middle; /*For buttons as well*/
+    vertical-align: middle;
+}
+#generate-pdf {
+        margin: 2em 0;
+ 
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #3c4ef1;
 }
 
 #clear-inputs {
     background-color: red;
 }
+
+/* Container for the buttons to position them below the inputs */
+.button-container {
+    margin-top: 10px; /* Add some space above the buttons */
+}
+
 
 #item-list {
     margin-top: 20px;
@@ -99,8 +98,8 @@ button:hover {
 }
 
 #item-list-items li {
-  display: flex; /* Use flexbox for inline items */
-  align-items: center; /* Vertically center items */
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid #eee;
   padding: 8px 0;
 }
@@ -110,16 +109,30 @@ button:hover {
 }
 
 .item-details {
-    flex-grow: 1; /* Allow item details to take up available space */
+    flex-grow: 1;
+    display: flex; /* Make item details a flex container */
+    align-items: center; /* Vertically align content within item details */
+}
+
+.item-name-display {
+    width: 20%;
+}
+
+.item-description-display {
+    width: 60%;
+}
+
+.item-price-display {
+    width: 20%; /* Adjust as needed, but make sure sum is 100% */
 }
 .delete-button {
-    background-color: #f44336; /* Red color */
+    background-color: #f44336;
     color: white;
     border: none;
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;
-    margin-left: 10px; /* Add some spacing */
+    margin-left: 10px;
 }
 .delete-button:hover {
   background-color: darkred;
