@@ -35,7 +35,7 @@ function updateItemList() {
         // Create a span for the item details
         const itemDetailsSpan = document.createElement('span');
         itemDetailsSpan.classList.add('item-details');
-        itemDetailsSpan.textContent = `${item.name} - $${item.price.toFixed(2)} - ${item.description}`;
+        itemDetailsSpan.textContent = `${item.name}  - ${item.description}- $${item.price.toFixed(2)}`;
         listItem.appendChild(itemDetailsSpan);
 
         // Create the delete button
