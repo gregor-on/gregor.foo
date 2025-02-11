@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Item List PDF Generator</title>
+    <title>PDF Generator [to pay list]</title>
     <link rel="stylesheet" href="pdf.css">
 </head>
 <body>
-    <h1>PDF Generator</h1>
+    <h1>PDF Generator [to pay list]</h1>
 
     <div class="input-group">
-        <label for="company-name">Company [L-Tel]:</label>
-        <input type="text" id="company-name" name="company-name">
+        <label for="company-name">Company:</label>
+        <label type="text" id="company-name" name="company-name"><strong>[L-tel]</strong></label>
     </div>
     <div class="input-group">
-        <label for="list-name">List Name:</label>
+        <label for="list-name">Eng Name:</label>
         <input type="text" id="list-name" name="list-name">
     </div>
 
@@ -22,19 +22,18 @@
     <div class="item-input-container">
         <label for="item-name">Item:</label>
         <input type="text" id="item-name" name="item-name" class="item-name">
-        <label for="item-description">Cost Centre:</label>
+        <label for="item-description">Description:</label>
         <input type="text" id="item-description" name="item-description" class="item-description">
-        <label for="item-price">To pay:</label>
+        <label for="item-price">Price:</label>
         <input type="number" id="item-price" name="item-price" step="0.01" min="0" class="item-price">
-<br />
-        <div id="buttons">
+    </div>
+    <div class="button-container">
         <button id="add-item">Add Item</button>
-        <button id="clear-inputs">Clear Inputs</button> <!-- Renamed for clarity -->
-            </div>
+        <button id="clear-inputs">Clear Inputs</button>
     </div>
 
 
-    <h2>Item List</h2>
+    <h2>Payment list</h2>
     <div id="item-list">
        <ul id="item-list-items">
             <!-- Item items will be added here -->
@@ -42,6 +41,11 @@
     </div>
 
     <button id="generate-pdf">Generate & Download PDF</button>
+<p>to do:</p>
+<li>sum</li>
+<li>formatting [table looking]</li>
+<li>logo</li>
+<li>clear variables for easier adjustment/integration</li>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
