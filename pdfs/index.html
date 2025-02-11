@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="pdf.css">
 </head>
 <body>
-    <h1>Item List PDF Generator</h1>
+    <h1>PDF Generator</h1>
 
     <div class="input-group">
-        <label for="company-name">Company:</label>
+        <label for="company-name">Company [L-Tel]:</label>
         <input type="text" id="company-name" name="company-name">
     </div>
     <div class="input-group">
@@ -22,9 +22,9 @@
     <div class="item-input-container">
         <label for="item-name">Item:</label>
         <input type="text" id="item-name" name="item-name" class="item-name">
-        <label for="item-description">Description:</label>
+        <label for="item-description">Cost Centre:</label>
         <input type="text" id="item-description" name="item-description" class="item-description">
-        <label for="item-price">Price:</label>
+        <label for="item-price">To pay:</label>
         <input type="number" id="item-price" name="item-price" step="0.01" min="0" class="item-price">
         <button id="add-item">Add Item</button>
         <button id="clear-inputs">Clear Inputs</button> <!-- Renamed for clarity -->
