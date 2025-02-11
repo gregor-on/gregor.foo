@@ -1,9 +1,9 @@
 // script.js
 const addItemButton = document.getElementById('add-item');
-const clearInputsButton = document.getElementById('clear-inputs'); // Renamed
+const clearInputsButton = document.getElementById('clear-inputs');
 const itemListItems = document.getElementById('item-list-items');
 const generatePdfButton = document.getElementById('generate-pdf');
-let items = []; // Use 'let' to allow reassignment
+let items = [];
 
 addItemButton.addEventListener('click', () => {
     const itemName = document.getElementById('item-name').value;
@@ -13,7 +13,7 @@ addItemButton.addEventListener('click', () => {
     if (itemName && !isNaN(itemPrice)) {
         items.push({ name: itemName, description: itemDescription, price: itemPrice });
         updateItemList();
-        clearInputFields(); // Clear *input* fields after adding
+        clearInputFields();
     } else {
         alert("Please enter a valid item name and price.");
     }
@@ -28,23 +28,40 @@ function clearInputFields() {
 }
 
 function updateItemList() {
-    itemListItems.innerHTML = ''; // Clear the list before updating
+    itemListItems.innerHTML = '';
     items.forEach((item, index) => {
         const listItem = document.createElement('li');
 
-        // Create a span for the item details
-        const itemDetailsSpan = document.createElement('span');
-        itemDetailsSpan.classList.add('item-details');
-        itemDetailsSpan.textContent = `${item.name}  - ${item.description}- $${item.price.toFixed(2)}`;
-        listItem.appendChild(itemDetailsSpan);
+        // Create spans for each part of the item details
+        const itemNameSpan = document.createElement('span');
+        itemNameSpan.classList.add('item-name-display');
+        itemNameSpan.textContent = item.name;
+
+        const itemDescriptionSpan = document.createElement('span');
+        itemDescriptionSpan.classList.add('item-description-display');
+        itemDescriptionSpan.textContent = item.description;
+
+        const itemPriceSpan = document.createElement('span');
+        itemPriceSpan.classList.add('item-price-display');
+        itemPriceSpan.textContent = `$${item.price.toFixed(2)}`;
+
+         // Create a container for all details and add the spans
+        const itemDetailsContainer = document.createElement('span');
+        itemDetailsContainer.classList.add('item-details');
+        itemDetailsContainer.appendChild(itemNameSpan);
+        itemDetailsContainer.appendChild(itemDescriptionSpan);
+        itemDetailsContainer.appendChild(itemPriceSpan);
+
+        listItem.appendChild(itemDetailsContainer);
+
 
         // Create the delete button
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = '🗑️'; // Trash can emoji
+        deleteButton.textContent = '🗑️';
         deleteButton.classList.add('delete-button');
         deleteButton.addEventListener('click', () => {
-            items.splice(index, 1); // Remove the item from the array
-            updateItemList();       // Re-render the list
+            items.splice(index, 1);
+            updateItemList();
         });
         listItem.appendChild(deleteButton);
 
@@ -64,40 +81,37 @@ generatePdfButton.addEventListener('click', () => {
     const listName = document.getElementById('list-name').value || "ItemList";
     const companyName = document.getElementById('company-name').value || "";
 
-    // Company name *above* list name
     if (companyName) {
         doc.setFontSize(16);
         doc.text(companyName, 10, 10);
     }
 
     doc.setFontSize(20);
-    doc.text(listName, 10, companyName ? 20 : 10); // Adjust based on company name
-
+    doc.text(listName, 10, companyName ? 20 : 10);
 
     doc.setFontSize(12);
 
-    let yPos = companyName ? 35 : 25; // Adjust based on company name.  Crucial!
+    let yPos = companyName ? 35 : 25;
     const lineHeight = 10;
     const margin = 10;
     const pageWidth = doc.internal.pageSize.getWidth() - 2 * margin;
-    const itemWidth = pageWidth * 0.2;      // 20% for item name
-    const priceWidth = pageWidth * 0.1;    // 10% for price
-    const descriptionWidth = pageWidth * 0.7; // 70% for description
+    const itemWidth = pageWidth * 0.2;
+    const descriptionWidth = pageWidth * 0.6;  //Corrected
+    const priceWidth = pageWidth * 0.2; // Corrected.  Must total 1.0 (100%)
 
     items.forEach(item => {
         // --- Inline layout within the PDF ---
         doc.setFont('helvetica', 'bold');
         doc.text(item.name, margin, yPos, { maxWidth: itemWidth });
         doc.setFont('helvetica', 'normal');
+        // Description *after* name
         const descriptionLines = doc.splitTextToSize(item.description, descriptionWidth);
-        doc.text(descriptionLines, margin + itemWidth + priceWidth, yPos);
-        doc.text(`$${item.price.toFixed(2)}`, margin + itemWidth, yPos, { maxWidth: priceWidth });
+        doc.text(descriptionLines, margin + itemWidth, yPos, { maxWidth: descriptionWidth});
+        // Price *after* description
+        doc.text(`$${item.price.toFixed(2)}`, margin + itemWidth + descriptionWidth, yPos, { maxWidth: priceWidth });
 
-
-        // Calculate the height of the *highest* element (likely the description)
         const itemHeight = Math.max(lineHeight, descriptionLines.length * lineHeight);
-        yPos += itemHeight + 5; // Add extra space
-
+        yPos += itemHeight + 5;
 
         if (yPos > doc.internal.pageSize.getHeight() - margin) {
             doc.addPage();
