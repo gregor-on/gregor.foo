@@ -1,6 +1,12 @@
-@font-face {
+/* @font-face {
   font-family: Handwritten;
   src: url(ArchitectsDaughter-Regular.ttf);
+  src: url(1942.ttf);
+} */
+@font-face {
+  font-family: typeritter;
+/*   src: url(ArchitectsDaughter-Regular.ttf); */
+  src: url(1942.ttf);
 }
 @font-face {
   font-family: Mono;
@@ -22,7 +28,7 @@ body {
 }
 
 *:not(html):not(body) {
-   font-family: 'Handwritten', cursive;
+   font-family: 'typeritter';
    font-size: 1.25rem;
 	background: transparent;
 	padding: 0.5rem 0.5rem;
