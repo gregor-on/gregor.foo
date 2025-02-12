@@ -43,9 +43,9 @@ function updateItemList() {
 
         const itemPriceSpan = document.createElement('span');
         itemPriceSpan.classList.add('item-price-display');
-        itemPriceSpan.textContent = `$${item.price.toFixed(2)}`;
+        itemPriceSpan.textContent = `£${item.price.toFixed(2)}`;
 
-         // Create a container for all details and add the spans
+        // Create a container for all details and add the spans
         const itemDetailsContainer = document.createElement('span');
         itemDetailsContainer.classList.add('item-details');
         itemDetailsContainer.appendChild(itemNameSpan);
@@ -68,7 +68,6 @@ function updateItemList() {
         itemListItems.appendChild(listItem);
     });
 }
-
 generatePdfButton.addEventListener('click', () => {
     if (items.length === 0) {
         alert("Please add at least one item to the list.");
@@ -78,8 +77,8 @@ generatePdfButton.addEventListener('click', () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    const listName = document.getElementById('list-name').value || "ItemList";
-    const companyName = document.getElementById('company-name').value || "";
+    let engName = document.getElementById('list-name').value || "ItemList";
+    const companyName = document.getElementById('company-name').textContent || "";
 
     if (companyName) {
         doc.setFontSize(16);
@@ -87,7 +86,7 @@ generatePdfButton.addEventListener('click', () => {
     }
 
     doc.setFontSize(20);
-    doc.text(listName, 10, companyName ? 20 : 10);
+    doc.text(engName, 10, companyName ? 20 : 10);
 
     doc.setFontSize(12);
 
@@ -96,8 +95,10 @@ generatePdfButton.addEventListener('click', () => {
     const margin = 10;
     const pageWidth = doc.internal.pageSize.getWidth() - 2 * margin;
     const itemWidth = pageWidth * 0.2;
-    const descriptionWidth = pageWidth * 0.6;  //Corrected
-    const priceWidth = pageWidth * 0.2; // Corrected.  Must total 1.0 (100%)
+    const descriptionWidth = pageWidth * 0.6;  // Corrected
+    const priceWidth = pageWidth * 0.2; // Corrected. Must total 1.0 (100%)
+
+    let totalPrice = 0;
 
     items.forEach(item => {
         // --- Inline layout within the PDF ---
@@ -106,9 +107,11 @@ generatePdfButton.addEventListener('click', () => {
         doc.setFont('helvetica', 'normal');
         // Description *after* name
         const descriptionLines = doc.splitTextToSize(item.description, descriptionWidth);
-        doc.text(descriptionLines, margin + itemWidth, yPos, { maxWidth: descriptionWidth});
+        doc.text(descriptionLines, margin + itemWidth, yPos, { maxWidth: descriptionWidth });
         // Price *after* description
-        doc.text(`$${item.price.toFixed(2)}`, margin + itemWidth + descriptionWidth, yPos, { maxWidth: priceWidth });
+        doc.text(`£${item.price.toFixed(2)}`, margin + itemWidth + descriptionWidth, yPos, { maxWidth: priceWidth });
+
+        totalPrice += item.price;
 
         const itemHeight = Math.max(lineHeight, descriptionLines.length * lineHeight);
         yPos += itemHeight + 5;
@@ -119,10 +122,23 @@ generatePdfButton.addEventListener('click', () => {
         }
     });
 
+    // Add a line below the list
+    doc.setLineWidth(0.5);
+    doc.line(margin, yPos, pageWidth + margin, yPos);
+    yPos += 5;
+
+    // Display the total price aligned with the "price" column
+    doc.setFont('helvetica', 'bold');
+    doc.text("Total:", margin + itemWidth + descriptionWidth - 20, yPos);
+    doc.text(`$${totalPrice.toFixed(2)}`, margin + itemWidth + descriptionWidth, yPos);
+
     const now = new Date();
     const generatedDate = `Generated on: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
     doc.setFontSize(10);
     doc.text(generatedDate, margin, doc.internal.pageSize.getHeight() - 10);
-
-    doc.save("item-list.pdf");
+    const formattedDate = now.toLocaleDateString('en-GB').split('/').reverse().join('');
+    const formattedTime = now.toLocaleTimeString('en-GB', { hour12: false }).replace(/:/g, '');
+    engName = engName.replace(/\s+/g, '').toLowerCase();
+    const invoiceNumber = `${engName}_${formattedDate}${formattedTime}`;
+    doc.save(invoiceNumber + ".pdf");
 });
