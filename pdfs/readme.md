@@ -8,6 +8,7 @@
 #element-to-print {
   background-color: none;
   margin: 0 20px;
+  width:920px;   /* adjust to fit all content, avoid line breaks orr add controlled breaks*/
 
 }
 td {
