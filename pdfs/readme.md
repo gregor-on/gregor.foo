@@ -22,12 +22,7 @@ document.getElementById('generate').onclick = function () {
 	html2pdf(element);
 };
 
-document.getElementById('generateCanvas').onclick = function () {
-	var element = document.getElementById('element-to-print');
-	html2canvas(element).then(function (canvas) {
-  	document.body.appendChild(canvas);
-  });
-};
+
 
 ```
 ```html
