@@ -3,6 +3,11 @@
 * check https://mrrio.github.io/jsPDF/ if the whole thing can be simplified, and how it would work split into multiple pages when content exceeds one
 * check if this would be simper https://ekoopmans.github.io/html2pdf.js/ https://jsfiddle.net/eKoopmans/z1rupL4c/
 
+## currently used
+jspdf.umd.min.js
+
+
+## below notes for  html2canvas.min.js
   _CSS_
 ```css
 #element-to-print {
