@@ -6,11 +6,11 @@
 @font-face {
   font-family: typeritter;
 /*   src: url(ArchitectsDaughter-Regular.ttf); */
-  src: url(1942.ttf);
+  src: url(../1942.ttf);
 }
 @font-face {
   font-family: Mono;
-  src: url(Jackwrite.woff2);
+  src: url(../Jackwrite.woff2);
 }
 pre, code {
    font-family: Mono !important;
