@@ -2,3 +2,52 @@
 ## To do :
 * check https://mrrio.github.io/jsPDF/ if the whole thing can be simplified, and how it would work split into multiple pages when content exceeds one
 * check if this would be simper https://ekoopmans.github.io/html2pdf.js/ https://jsfiddle.net/eKoopmans/z1rupL4c/
+```css
+#element-to-print {
+  background-color: none;
+  margin: 0 20px;
+
+}
+td {
+  
+  height: 80px;
+  font-size:.4em;
+  padding:10px:
+}
+```
+```javascript
+document.getElementById('generate').onclick = function () {
+	// Your html2pdf code here.
+	var element = document.getElementById('element-to-print');
+	html2pdf(element);
+};
+
+document.getElementById('generateCanvas').onclick = function () {
+	var element = document.getElementById('element-to-print');
+	html2canvas(element).then(function (canvas) {
+  	document.body.appendChild(canvas);
+  });
+};
+
+```
+```html
+<button id="generate">Create PDF</button>
+<button id="generateCanvas">Create Canvas</button>
+
+<div id="element-to-print">
+ <p>
+ Element to print.
+ </p> 
+
+<table>
+    <tr>
+        <td>5333333</td>
+        <td>Item 1 </td>
+        <td>C16 -  Visit</td>
+        <td>cr46d_question </td>
+    </tr>
+</table>
+
+</div>
+
+```
