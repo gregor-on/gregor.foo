@@ -28,7 +28,7 @@ body {
 }
 
 *:not(html):not(body) {
-   font-family: 'typeritter';
+   font-family: 'typeritter', 'Courier New', Courier, monospace;
    font-size: 1.25rem;
 	background: transparent;
 	padding: 0.5rem 0.5rem;
