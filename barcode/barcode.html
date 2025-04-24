@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: gray
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        #info {
+            margin-top: 20px;
+            font-size: 8px;
+            color: #555;
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        #barcode {
+            font-family: 'Libre Barcode 39 Extended Text', monospace;
+            font-size: 55px;
+            text-align: center;
+            margin-top: 20px;
+            white-space: nowrap;
+            line-height: 2;
+        }
+
+        button {
+            background-color: #008080;
+            /* Teal */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .barcode {
+            display: none;
+        }
+
+        button:hover {
+            background-color: #006666;
+        }
+
+        @font-face {
+            font-family: "Libre Barcode 39 Extended Text";
+            src: url(https://fonts.gstatic.com/s/librebarcode39extendedtext/v28/eLG1P_rwIgOiDA7yrs9LoKaYRVLQ1YldrrOnnL7xPO4jNP6Me7gj.woff2) format('woff2');
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+
+        }
+
+        @media print {
+
+
+            @page {
+                margin: 0;
+            }
+
+
+            body {
+                margin: 0;
+                padding: 0;
+                color: #000;
+                background-color: #fff;
+
+
+            }
+
+            input[type="text"] {
+                display: none;
+            }
+
+            h2,
+            button,
+            label {
+                display: none;
+            }
+
+            .barcode {
+                width: 100%;
+                height: auto;
+                font-family: 'Libre Barcode 39 Extended Text', monospace;
+                font-size: 50px;
+                text-align: center;
+                /* margin-top: 20px; */
+                white-space: nowrap;
+                border: #000 1px solid;
+                padding: 5px;
+                display: block;
+                border-radius: 10px;
+                transform: scaleY(2);
+                /* Adjust the scale factor to increase height */
+
+            }
+
+
+            .container {
+                display: none;
+                /* Hide the container in print view */
+            }
+
+            .print-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                /* Adjust the number of columns */
+                grid-template-rows: auto;
+                /* Automatically adjust the rows */
+                gap: 75px;
+                /* Adjust the gap between barcodes */
+                grid-column-gap: 15px;
+            }
+
+
+
+
+
+
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <h2>Barcode Generator</h2>
+        <label for="data">Enter Label Data:</label>
+        <input type="text" id="data" placeholder="e.g.,max 11" maxlength="11">
+        <button onclick="generateBarcode()">Generate Barcode</button>
+        <button onClick="window.print()">Print it</button>
+        <div id="barcode">*BARCODE*</div>
+        <hr>
+        <div id="info">
+
+            <p>It uses:</p>
+            <p>https://fonts.gstatic.com/s/librebarcode39extendedtext/v28/eLG1P_rwIgOiDA7yrs9LoKaYRVLQ1YldrrOnnL7xPO4jNP6Me7gj.woff2
+            </p>
+            <p>Libre Barcode 39 Extended Text - of google CDN</p>
+            <p>3of9 extended is relatively easy to handle as it doesn't do any encoding - it is just font so can be easy
+                installed on any machine</p>
+            <p>Supports the input characters: “$ / + % 0–9 A–Z - .” and “ “(space)</p>
+            <P>This generator automatically wraps input in * *, eg.: *HELLO WORLD* </P>
+            <p>For usage instructions and further information vist the <a
+                    href="https://graphicore.github.io/librebarcode/documentation/code39.html">documentation of the Code
+                    39 format</a>.</p>
+            <p><a href="https://fonts.google.com/specimen/Libre+Barcode+39+Extended+Text">Libre Barcode 39 Extended
+                    Text</a></p>
+
+        </div>
+    </div>
+
+    <div class="print-container"></div>
+
+
+    <script>
+        function generateBarcode() {
+            var data = document.getElementById("data").value;
+            var barcode = '*' + data.toUpperCase() + '*';
+            var barcodeDiv = document.getElementById("barcode");
+            barcodeDiv.innerText = barcode;
+
+            // Create multiple barcode elements for printing
+            var printContainer = document.querySelector('.print-container');
+            printContainer.innerHTML = ''; // Clear previous barcodes
+            for (var i = 0; i < 12; i++) { // Adjust the number of barcodes
+                var newBarcode = document.createElement('div');
+                newBarcode.className = 'barcode';
+                newBarcode.innerText = barcode;
+                printContainer.appendChild(newBarcode);
+            }
+        }
+    </script>
+
+</body>
+
+
+</html>
